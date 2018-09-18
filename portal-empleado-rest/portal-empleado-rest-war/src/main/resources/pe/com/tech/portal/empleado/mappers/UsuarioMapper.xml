@@ -1,0 +1,58 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.com.tech.portal.empleado.mappers.UsuarioMapper">
+	
+	<resultMap id="UserResultmap" type="pe.com.tech.portal.empleado.domain.Usuario">	  	
+	  	<result column="id"  property="idUser"  />
+	  	<result column="login"  property="login"  />
+	 	<result column="password_hash"  property="clave"  />
+	 	<result column="first_name"  property="nombres"  />
+	 	<result column="last_name"  property="apellidos"  />
+	 	<result column="email"  property="correo"  />
+	 	<result column="activated"  property="activo"  />	 	
+	</resultMap>
+	
+	<!--  
+	<select id="getUserByLogin2" statementType="CALLABLE"
+  	 parameterType="map" resultMap="UserResultmap">
+		{call getUserByLogin(
+	   		#{inLogin, mode=IN, jdbcType=VARCHAR}
+	   )}
+	</select>
+	-->
+	
+	<select id="getUserByLogin" parameterType="map" resultMap="UserResultmap">
+		select id,login,
+		password_hash,
+		first_name,
+		last_name,
+		email,
+		activated
+		from 
+		hr_user
+		where 
+		login = #{inLogin};
+	</select>
+	
+	<select id="getUserById" parameterType="map" resultMap="UserResultmap">
+		select id,login,
+		password_hash,
+		first_name,
+		last_name,
+		email,
+		activated
+		from 
+		hr_user
+		where 
+		id = #{inIdUser};
+	</select>
+	
+	<update id="updatePassword" parameterType="map">
+		UPDATE hr_user
+		SET password_hash = #{newPass}
+		WHERE id = #{idUser};	
+	</update>
+	
+</mapper>

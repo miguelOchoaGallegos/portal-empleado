@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="log-path">logs/rest/empleado-rest/log</Property>
+        <Property name="PATTERN">[%d{ISO8601}] [%X{sessionId}] [%-5level] [%logger{36}] [%msg]%n</Property>
+        <Property name="log-name">portal-empleado-rest</Property>
+    </Properties>
+    <Appenders>
+    	<Console name="log-consola" target="SYSTEM_OUT">
+            <PatternLayout pattern="${PATTERN}" />
+            <Encoding>ISO-8859-1</Encoding>
+        </Console>
+        <RollingFile name="log-app"
+                     fileName="${log-path}/${log-name}.log"
+                     filePattern="${log-path}/${log-name}-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="${PATTERN}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+    	<root level="debug" additivity="false">
+            <appender-ref ref="log-consola" level="debug" />
+        </root>
+        <logger name="pe.com.tech.portal.empleado" level="debug" additivity="true">
+            <appender-ref ref="log-app" level="debug"/>
+        </logger>        
+    </Loggers>
+</Configuration>
