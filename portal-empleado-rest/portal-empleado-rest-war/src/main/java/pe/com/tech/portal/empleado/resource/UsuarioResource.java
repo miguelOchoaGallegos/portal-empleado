@@ -9,9 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,12 +19,11 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import pe.com.tech.portal.empleado.bean.UsuarioBean;
 import pe.com.tech.portal.empleado.error.HandlerException;
-import pe.com.tech.portal.empleado.interfaces.NewPasswordConstraint;
 import pe.com.tech.portal.empleado.service.UsuarioService;
 
 @RequestMapping("/api/usuario")
 @RestController
-@Api(tags = "usuario", description = "Realiza las tareas con respecto al usuario")
+@Api(tags = "Usuario", description = "Realiza las tareas con respecto al usuario")
 public class UsuarioResource {
 	
 	@Autowired 
@@ -47,7 +44,7 @@ public class UsuarioResource {
 		}
 	}
 	
-	@ApiOperation(value = "Genera nueva clave aletoria para usuario", notes = "${usuarioresource.actualizarclave.notes}", authorizations = {@Authorization(value = "Bearer")})
+	@ApiOperation(value = "Genera nueva clave aletoria para usuario", notes = "${usuarioresource.generarclavedinamica.notes}", authorizations = {@Authorization(value = "Bearer")})
     @GetMapping(path = "/generarClaveDinamica")
 	public ResponseEntity<?> generarClaveDinamica() {
 		try {

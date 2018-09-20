@@ -7,5 +7,7 @@
         <package name="pe.com.tech.portal.empleado.domain"/>
     </typeAliases>
     <mappers>
+    	<mapper resource="pe/com/tech/portal/empleado/mappers/UsuarioMapper.xml"/>
+    	<mapper resource="pe/com/tech/portal/empleado/mappers/EmpleadoMapper.xml"/>
     </mappers>
 </configuration>

@@ -1,0 +1,129 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.com.tech.portal.empleado.mappers.EmpleadoMapper">
+	
+	<resultMap id="DatosPersonalesResultmap" type="pe.com.tech.portal.empleado.domain.DatosPersonalesEmpleado">	  	
+	  	<result column="nombre"  property="nombre"  />
+	  	<result column="apellido_paterno"  property="apePaterno"  />
+	 	<result column="apellido_materno"  property="apeMaterno"  />
+	 	<result column="fecha_nacimiento"  property="fechaNacimiento"  />
+	 	<result column="id_tipo_documento"  property="tipoDocumento"  />
+	 	<result column="numero_documento"  property="numDocumento"  />
+	 	<result column="pais_emisor"  property="paisEmisor"  />
+	 	<result column="id_situacion"  property="situacion"  />
+	 	<result column="id_nacionalidad"  property="nacionalidad"  />
+	 	<result column="id_estado_civil"  property="estadoCivil"  />
+	 	<result column="direccion"  property="direccion"  />
+	 	<result column="email"  property="correoEmpresa"  />
+	 	<result column="email"  property="correoPersonal"  />
+	 	<result column="telefono_alternativo"  property="numTelefonoCelularEmpresa"  />
+	 	<result column="telefono_movil"  property="numTelefonoCelularPersonal"  />
+	 	<result column="telefono_fijo"  property="numTelefonoFijo"  />
+	 	<result column="id_grado_instruccion"  property="gradoInstruccion"  />
+	 	<result column="id_centro_formacion"  property="nombreInstitucion"  />
+	 	<result column="carrera"  property="descripcionCarrera"  />
+	 	<result column="anioegreso"  property="anioEgreso"  />	 	
+	</resultMap>
+	
+	<resultMap id="CuentaBancariaResultmap" type="pe.com.tech.portal.empleado.domain.CuentaBancariaEmpleado">	  	
+	  	<result column="cuenta_haberes_banco"  property="cuentaHaberesBanco"  />
+	  	<result column="cuenta_haberes_numero_cuenta"  property="cuentaHaberesNumeroCuenta"  />
+	 	<result column="cts_banco"  property="cuentaCTSBanco"  />
+	 	<result column="cts_numero_cuenta"  property="cuentaCTSNumeroCuenta"  />
+	 	<result column="codigo_afp_onp"  property="descripcionAFPONP"  />
+	 	<result column="codigo_cuspp"  property="cuspp"  />	 		 	
+	</resultMap>
+	
+	<resultMap id="SegurosResultmap" type="pe.com.tech.portal.empleado.domain.SegurosEmpleado">	  	
+	  	<result column="es_afiliado_eps"  property="esAfiliadoEPS"  />
+	  	<result column="es_afiliado_seguro_vida"  property="esAfiliadoSeguroVida"  />
+	 	<result column="es_afiliado_sctr"  property="esAfiliadoSCTR"  />
+	 	<result column="es_afiliado_vida_ley"  property="esAfiliadoVidaLey"  />	 		 		 	
+	</resultMap>
+	
+	<resultMap id="DependientesResultmap" type="pe.com.tech.portal.empleado.domain.DependientesEmpleado">	  	
+	  	<result column="parentesco"  property="parentesco"  />
+	  	<result column="nombre"  property="nombreCompleto"  />
+	 	<result column="sexo"  property="sexo"  />
+	 	<result column="edad"  property="edad"  />
+	 	<result column="fecha_nacimiento"  property="fechaNacimiento"  />
+	 	<result column="num_documento"  property="numeroDocumento"  />
+	 	<result column="estado"  property="estado"  />	 		 		 	
+	</resultMap>
+	
+	<select id="getDatosPersonalesByUser" parameterType="map" resultMap="DatosPersonalesResultmap">
+		select 
+		nombre,
+		apellido_paterno,
+		apellido_materno,
+		fecha_nacimiento,
+		id_tipo_documento,
+		numero_documento,
+		pais_emisor,
+		id_situacion,
+		id_nacionalidad,
+		id_estado_civil,
+		direccion,
+		email,
+		email,
+		telefono_alternativo,
+		telefono_movil,
+		telefono_fijo,
+		id_grado_instruccion,
+		id_centro_formacion,
+		'' carrera,
+		'2019' anioegreso
+		from hr_empleado 
+		where id in(
+		select id_empleado from user_empleado where id_user = #{idUser});
+	</select>
+	
+	<select id="getDatosCuentaBancariaByUser" parameterType="map" resultMap="CuentaBancariaResultmap">
+		select 
+		'BBVA' cuenta_haberes_banco,
+		'222-2222222222' cuenta_haberes_numero_cuenta,
+		'BCP' cts_banco,
+		'111111111111' cts_numero_cuenta,
+		codigo_afp_onp,
+		codigo_cussp		
+		from hr_empleado 
+		where id in(
+		select id_empleado from user_empleado where id_user = #{idUser} );
+	</select>
+	
+	<select id="getDatosSegurosByUser" parameterType="map" resultMap="SegurosResultmap">
+		select 
+		'Si' es_afiliado_eps,
+		'Si' es_afiliado_seguro_vida,
+		'Si' es_afiliado_sctr,
+		'Si' es_afiliado_vida_ley				
+		from hr_empleado 
+		where id in(
+		select id_empleado from user_empleado where id_user = #{idUser} );
+	
+	</select>
+	
+	<select id="getDatosDependientesByUser" parameterType="map" resultMap="DependientesResultmap">
+	
+	select 'hijo' parentesco,
+	'juan perez' nombre,
+	'Masculino' sexo ,
+	'10' edad,
+	'01/01/2008' fecha_nacimiento,
+	'48484848' num_documento,
+	'dependiente' estado
+	union all
+	select 'hija' parentesco,
+	'maria rosa' nombre,
+	'Femenico' sexo ,
+	'8' edad,
+	'01/01/2012' fecha_nacimiento,
+	'55555555' num_documento,
+	'dependiente' estado;
+	
+	</select>
+
+	
+</mapper>

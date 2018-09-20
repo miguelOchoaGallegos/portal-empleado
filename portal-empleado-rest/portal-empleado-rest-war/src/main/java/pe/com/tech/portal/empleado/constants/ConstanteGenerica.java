@@ -2,6 +2,9 @@ package pe.com.tech.portal.empleado.constants;
 
 public class ConstanteGenerica {
 
+	
+	public static final String RUTA_CERTIFICADO_RESOURCES = "/tech/app/portal-empleado/rest/properties/";
+	
 	public static class ResponseService {
 		public static String RESPONSE = "rpta";
 		public static String MESSAGE = "mensaje";
